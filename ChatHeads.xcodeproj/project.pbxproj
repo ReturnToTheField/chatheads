@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		664E93901725C4960088A857 /* SKBounceAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 664E93731725C4960088A857 /* SKBounceAnimation.m */; };
-		664E93AE1725C7560088A857 /* CAAnimation+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 664E93A01725C7560088A857 /* CAAnimation+Blocks.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		667E359A17214105000B8445 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 667E359917214104000B8445 /* UIKit.framework */; };
 		667E359C17214105000B8445 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 667E359B17214105000B8445 /* Foundation.framework */; };
 		667E359E17214105000B8445 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 667E359D17214105000B8445 /* CoreGraphics.framework */; };
@@ -26,13 +24,11 @@
 		667E35D217215E6B000B8445 /* CHAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 667E35D117215E6B000B8445 /* CHAvatarView.m */; };
 		667E35D517215EDF000B8445 /* CHDraggableView+Avatar.m in Sources */ = {isa = PBXBuildFile; fileRef = 667E35D417215EDF000B8445 /* CHDraggableView+Avatar.m */; };
 		66EEA08B1724625700DCBB06 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66EEA08A1724625700DCBB06 /* QuartzCore.framework */; };
+		FB01F83C34374706A3D0906D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1548F1451B914CF6A62B695D /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		664E93721725C4960088A857 /* SKBounceAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SKBounceAnimation.h; path = SKBounceAnimation/SKBounceAnimation.h; sourceTree = "<group>"; };
-		664E93731725C4960088A857 /* SKBounceAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SKBounceAnimation.m; path = SKBounceAnimation/SKBounceAnimation.m; sourceTree = "<group>"; };
-		664E939F1725C7560088A857 /* CAAnimation+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+Blocks.h"; sourceTree = "<group>"; };
-		664E93A01725C7560088A857 /* CAAnimation+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAAnimation+Blocks.m"; sourceTree = "<group>"; };
+		1548F1451B914CF6A62B695D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		667E359617214104000B8445 /* ChatHeads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatHeads.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		667E359917214104000B8445 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		667E359B17214105000B8445 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -59,6 +55,7 @@
 		667E35D317215EDF000B8445 /* CHDraggableView+Avatar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CHDraggableView+Avatar.h"; sourceTree = "<group>"; };
 		667E35D417215EDF000B8445 /* CHDraggableView+Avatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CHDraggableView+Avatar.m"; sourceTree = "<group>"; };
 		66EEA08A1724625700DCBB06 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A73F26ED7A2046C9B2FB8621 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,47 +67,20 @@
 				667E359A17214105000B8445 /* UIKit.framework in Frameworks */,
 				667E359C17214105000B8445 /* Foundation.framework in Frameworks */,
 				667E359E17214105000B8445 /* CoreGraphics.framework in Frameworks */,
+				FB01F83C34374706A3D0906D /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		664E93561725C4960088A857 /* Externals */ = {
-			isa = PBXGroup;
-			children = (
-				664E939C1725C7560088A857 /* CAAnimationBlocks */,
-				664E93571725C4960088A857 /* SKBounceAnimation */,
-			);
-			path = Externals;
-			sourceTree = "<group>";
-		};
-		664E93571725C4960088A857 /* SKBounceAnimation */ = {
-			isa = PBXGroup;
-			children = (
-				664E93721725C4960088A857 /* SKBounceAnimation.h */,
-				664E93731725C4960088A857 /* SKBounceAnimation.m */,
-			);
-			path = SKBounceAnimation;
-			sourceTree = "<group>";
-		};
-		664E939C1725C7560088A857 /* CAAnimationBlocks */ = {
-			isa = PBXGroup;
-			children = (
-				664E939F1725C7560088A857 /* CAAnimation+Blocks.h */,
-				664E93A01725C7560088A857 /* CAAnimation+Blocks.m */,
-			);
-			name = CAAnimationBlocks;
-			path = CAAnimationBlocks/CAAnimationBlocks;
-			sourceTree = "<group>";
-		};
 		667E358D17214104000B8445 = {
 			isa = PBXGroup;
 			children = (
-				66EEA08A1724625700DCBB06 /* QuartzCore.framework */,
 				667E359F17214105000B8445 /* ChatHeads */,
 				667E359817214104000B8445 /* Frameworks */,
 				667E359717214104000B8445 /* Products */,
+				A73F26ED7A2046C9B2FB8621 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,9 +95,11 @@
 		667E359817214104000B8445 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				66EEA08A1724625700DCBB06 /* QuartzCore.framework */,
 				667E359917214104000B8445 /* UIKit.framework */,
 				667E359B17214105000B8445 /* Foundation.framework */,
 				667E359D17214105000B8445 /* CoreGraphics.framework */,
+				1548F1451B914CF6A62B695D /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -135,7 +107,6 @@
 		667E359F17214105000B8445 /* ChatHeads */ = {
 			isa = PBXGroup;
 			children = (
-				664E93561725C4960088A857 /* Externals */,
 				667E35CC17215D51000B8445 /* Resources */,
 				667E35BC17214114000B8445 /* Classes */,
 				667E35A817214105000B8445 /* AppDelegate.h */,
@@ -200,9 +171,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 667E35B917214105000B8445 /* Build configuration list for PBXNativeTarget "ChatHeads" */;
 			buildPhases = (
+				90BD139F241E40E5BC0A6E11 /* Check Pods Manifest.lock */,
 				667E359217214104000B8445 /* Sources */,
 				667E359317214104000B8445 /* Frameworks */,
 				667E359417214104000B8445 /* Resources */,
+				D6E4A73CBAF94BD2B1ADD75A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -255,6 +228,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		90BD139F241E40E5BC0A6E11 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D6E4A73CBAF94BD2B1ADD75A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		667E359217214104000B8445 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -267,8 +273,6 @@
 				667E35CB17214C0C000B8445 /* CHDraggingCoordinator.m in Sources */,
 				667E35D217215E6B000B8445 /* CHAvatarView.m in Sources */,
 				667E35D517215EDF000B8445 /* CHDraggableView+Avatar.m in Sources */,
-				664E93901725C4960088A857 /* SKBounceAnimation.m in Sources */,
-				664E93AE1725C7560088A857 /* CAAnimation+Blocks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +356,7 @@
 		};
 		667E35BA17214105000B8445 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A73F26ED7A2046C9B2FB8621 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatHeads/ChatHeads-Prefix.pch";
@@ -363,6 +368,7 @@
 		};
 		667E35BB17214105000B8445 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A73F26ED7A2046C9B2FB8621 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatHeads/ChatHeads-Prefix.pch";
