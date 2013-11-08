@@ -131,8 +131,10 @@ typedef enum {
 - (void)draggableViewTouched:(CHDraggableView *)view
 {
     if (_state == CHInteractionStateNormal) {
-        _state = CHInteractionStateConversation;
-        [self _animateViewToConversationArea:view];
+        if (!self.actionBlock) {
+            _state = CHInteractionStateConversation;
+            [self _animateViewToConversationArea:view];
+        }
         
         [self _presentViewControllerForDraggableView:view];
     } else if(_state == CHInteractionStateConversation) {
