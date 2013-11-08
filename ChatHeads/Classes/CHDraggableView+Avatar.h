@@ -10,10 +10,10 @@
 
 @interface CHDraggableView (Avatar)
 
-+ (id)draggableViewWithImage:(UIImage *)image;
-+ (id)draggableViewWithImage:(UIImage *)image size:(CGSize)size;
++ (instancetype)draggableViewWithImage:(UIImage *)image;
++ (instancetype)draggableViewWithImage:(UIImage *)image size:(CGSize)size;
 
-+ (id)draggableViewWithFillColor:(UIColor *)color;
-+ (id)draggableViewWithFillColor:(UIColor *)color size:(CGSize)size;
++ (instancetype)draggableViewWithFillColor:(UIColor *)color;
++ (instancetype)draggableViewWithFillColor:(UIColor *)color size:(CGSize)size;
 
 @end
