@@ -193,17 +193,21 @@ typedef enum {
 
 - (void)_presentViewControllerForDraggableView:(CHDraggableView *)draggableView
 {
-    UIViewController *viewController = [_delegate draggingCoordinator:self viewControllerForDraggableView:draggableView];
-    
-    _presentedNavigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    _presentedNavigationController.view.layer.cornerRadius = 3;
-    _presentedNavigationController.view.layer.masksToBounds = YES;
-    _presentedNavigationController.view.layer.anchorPoint = CGPointMake(0.5f, 0);
-    _presentedNavigationController.view.frame = [self _navigationControllerFrame];
-    _presentedNavigationController.view.transform = CGAffineTransformMakeScale(0, 0);
-    
-    [self.window insertSubview:_presentedNavigationController.view belowSubview:draggableView];
-    [self _unhidePresentedNavigationControllerCompletion:^{}];
+    if (_actionBlock) {
+        _actionBlock(self, draggableView);
+    } else {
+        UIViewController *viewController = [_delegate draggingCoordinator:self viewControllerForDraggableView:draggableView];
+        
+        _presentedNavigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+        _presentedNavigationController.view.layer.cornerRadius = 3;
+        _presentedNavigationController.view.layer.masksToBounds = YES;
+        _presentedNavigationController.view.layer.anchorPoint = CGPointMake(0.5f, 0);
+        _presentedNavigationController.view.frame = [self _navigationControllerFrame];
+        _presentedNavigationController.view.transform = CGAffineTransformMakeScale(0, 0);
+        
+        [self.window insertSubview:_presentedNavigationController.view belowSubview:draggableView];
+        [self _unhidePresentedNavigationControllerCompletion:^{}];
+    }
 }
 
 - (void)_dismissPresentedNavigationController

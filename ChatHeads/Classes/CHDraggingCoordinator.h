@@ -16,11 +16,16 @@ typedef enum {
     CHSnappingEdgeLeft
 } CHSnappingEdge;
 
+@class CHDraggingCoordinator;
+typedef void(^CHDraggingCoordinatorActionBlock)(CHDraggingCoordinator*, CHDraggableView*);
+
+
 @protocol CHDraggingCoordinatorDelegate;
 @interface CHDraggingCoordinator : NSObject <CHDraggableViewDelegate>
 
 @property (nonatomic) CHSnappingEdge snappingEdge;
 @property (nonatomic, weak) id<CHDraggingCoordinatorDelegate> delegate;
+@property (nonatomic, copy) CHDraggingCoordinatorActionBlock actionBlock;       // use this action block instead of the delegate draggingCoordinator:viewControllerForDraggableView: method (if actionBlock exists, it gets called instead of the delegate)
 
 - (instancetype)initWithWindow:(UIWindow *)window draggableViewBounds:(CGRect)bounds;
 
