@@ -28,6 +28,7 @@ typedef void(^CHDraggingCoordinatorActionBlock)(CHDraggingCoordinator*, CHDragga
 @property (nonatomic, copy) CHDraggingCoordinatorActionBlock actionBlock;       // use this action block instead of the delegate draggingCoordinator:viewControllerForDraggableView: method (if actionBlock exists, it gets called instead of the delegate)
 
 - (instancetype)initWithWindow:(UIWindow *)window draggableViewBounds:(CGRect)bounds;
+- (instancetype)initWithWindow:(UIWindow *)window draggableViewBounds:(CGRect)bounds closeView:(UIView *)closeView;
 
 @end
 

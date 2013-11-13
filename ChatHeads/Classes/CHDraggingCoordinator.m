@@ -9,6 +9,7 @@
 #import "CHDraggingCoordinator.h"
 #import <QuartzCore/QuartzCore.h>
 #import "CHDraggableView.h"
+#import "CHAvatarView.h"
 
 typedef enum {
     CHInteractionStateNormal,
@@ -24,11 +25,27 @@ typedef enum {
 @property (nonatomic, strong) UINavigationController *presentedNavigationController;
 @property (nonatomic, strong) UIView *backgroundView;
 
+@property (nonatomic, strong) UIView *closeView;                // view on center bottom - drag the draggable view on top of it to make it go away
+@property (nonatomic, assign) CGRect closeViewEnterScreenFrame; // the position of the close view when entering the screen
+@property (nonatomic, assign) CGRect closeViewOnScreenFrame;    // the position of the close view after being moved (this is it's default pos)
+@property (nonatomic, assign) CGRect closeViewEnlargedFrame;    // the position of the close view enlarged (when the draggable view is close)
+
 @end
+
 
 @implementation CHDraggingCoordinator
 
 - (instancetype)initWithWindow:(UIWindow *)window draggableViewBounds:(CGRect)bounds
+{
+    UIView *aCloseView = [[UIView alloc] initWithFrame:bounds];
+    aCloseView.layer.cornerRadius = 30;
+    aCloseView.backgroundColor = [UIColor lightGrayColor];
+    aCloseView.alpha = 0.8;
+    
+    return [self initWithWindow:window draggableViewBounds:bounds closeView:aCloseView];
+}
+
+- (instancetype)initWithWindow:(UIWindow *)window draggableViewBounds:(CGRect)bounds closeView:(UIView *)closeView
 {
     self = [super init];
     if (self) {
@@ -36,6 +53,23 @@ typedef enum {
         _draggableViewBounds = bounds;
         _state = CHInteractionStateNormal;
         _edgePointDictionary = [NSMutableDictionary dictionary];
+        
+        _closeView = closeView;
+        _closeView.center = CGPointMake(CGRectGetMidX(window.bounds), CGRectGetMaxY(window.bounds));
+        
+        _closeViewEnterScreenFrame = _closeView.frame;
+        
+        // move it up 20 pixels
+        _closeViewOnScreenFrame = _closeViewEnterScreenFrame;
+        _closeViewOnScreenFrame.origin.y -= bounds.size.height + 20;
+        
+        // extend width and height by preserving center position
+        CGFloat delta = 20;
+        _closeViewEnlargedFrame = _closeViewOnScreenFrame;
+        _closeViewEnlargedFrame.origin.x -= round(delta / 2);
+        _closeViewEnlargedFrame.origin.y -= round(delta / 2);
+        _closeViewEnlargedFrame.size.width += delta;
+        _closeViewEnlargedFrame.size.height += delta;
     }
     return self;
 }
@@ -74,7 +108,7 @@ typedef enum {
     CGRectEdge destinationEdge = [self _destinationEdgeForReleasePointInCurrentState:releasePoint];
     CGFloat destinationY;
     CGFloat destinationX;
- 
+    
     CGFloat topYConstraint = CGRectGetMinY(dropArea) + CGRectGetMidY(_draggableViewBounds);
     CGFloat bottomYConstraint = CGRectGetMaxY(dropArea) - CGRectGetMidY(_draggableViewBounds);
     if (releasePoint.y < topYConstraint) { // Align ChatHead vertically
@@ -84,7 +118,7 @@ typedef enum {
     }else {
         destinationY = releasePoint.y;
     }
-
+    
     if (self.snappingEdge == CHSnappingEdgeBoth){   //ChatHead will snap to both edges
         if (destinationEdge == CGRectMinXEdge) {
             destinationX = CGRectGetMinX(dropArea) + midXDragView;
@@ -98,7 +132,7 @@ typedef enum {
     }else{  //ChatHead will snap only to right edge
         destinationX = CGRectGetMaxX(dropArea) - midXDragView;
     }
-
+    
     return CGPointMake(destinationX, destinationY);
 }
 
@@ -106,11 +140,40 @@ typedef enum {
 
 - (void)draggableViewHold:(CHDraggableView *)view
 {
+    // make sure the close view is positioned at the entry screen position
+    self.closeView.frame = self.closeViewEnterScreenFrame;
     
+    // then animate it to on screen position and add it
+    [UIView transitionWithView:self.window
+                      duration:0.4
+                       options:UIViewAnimationOptionCurveEaseIn
+                    animations:^ {
+                        [self.window insertSubview:self.closeView belowSubview:view];
+                        self.closeView.frame = self.closeViewOnScreenFrame;
+                    }
+                    completion:nil];
+}
+
+- (BOOL)shouldRemoveDraggableView:(CHDraggableView *)view
+{
+    // this determines if based on the draggable and close view positions, the draggable should be closed aka removed
+    return CGRectIntersectsRect(view.frame, self.closeView.frame);
 }
 
 - (void)draggableView:(CHDraggableView *)view didMoveToPoint:(CGPoint)point
 {
+    CGRect frame = CGRectZero;
+    if ([self shouldRemoveDraggableView:view]) {
+        frame = self.closeViewEnlargedFrame;
+    } else {
+        frame = self.closeViewOnScreenFrame;
+    }
+    if (!CGRectEqualToRect(frame, self.closeView.frame)) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.closeView.frame = frame;
+        }];
+    }
+    
     if (_state == CHInteractionStateConversation) {
         if (_presentedNavigationController) {
             [self _dismissPresentedNavigationController];
@@ -120,12 +183,37 @@ typedef enum {
 
 - (void)draggableViewReleased:(CHDraggableView *)view
 {
-    if (_state == CHInteractionStateNormal) {
-        [self _animateViewToEdges:view];
-    } else if(_state == CHInteractionStateConversation) {
-        [self _animateViewToConversationArea:view];
-        [self _presentViewControllerForDraggableView:view];
+    BOOL shouldRemoveDraggableView = [self shouldRemoveDraggableView:view];
+    
+    // in case we will remove the draggable, no need to do anything else
+    if (!shouldRemoveDraggableView) {
+        if (_state == CHInteractionStateNormal) {
+            [self _animateViewToEdges:view];
+        } else if(_state == CHInteractionStateConversation) {
+            [self _animateViewToConversationArea:view];
+            [self _presentViewControllerForDraggableView:view];
+        }
     }
+    
+    // animation: the close view dissapears. If draggable needs to dissapear as well, make it happen in the same animation
+    [UIView transitionWithView:self.window
+                      duration:0.3
+                       options:UIViewAnimationOptionCurveEaseOut
+                    animations:^ {
+                        self.closeView.frame = self.closeViewEnterScreenFrame;
+                        if (shouldRemoveDraggableView) {
+                            CGRect frame = view.frame;
+                            frame.origin.y = self.closeViewEnterScreenFrame.origin.y;
+                            frame.origin.x = self.closeViewEnterScreenFrame.origin.x;
+                            view.frame = frame;
+                        }
+                    }
+                    completion:^(BOOL finished) {
+                        [self.closeView removeFromSuperview];
+                        if (shouldRemoveDraggableView) {
+                            [view removeFromSuperview];
+                        }
+                    }];
 }
 
 - (void)draggableViewTouched:(CHDraggableView *)view
@@ -161,7 +249,7 @@ typedef enum {
 
 - (void)_animateViewToEdges:(CHDraggableView *)view
 {
-    CGPoint destinationPoint = [self _destinationPointForReleasePoint:view.center];    
+    CGPoint destinationPoint = [self _destinationPointForReleasePoint:view.center];
     [self _animateView:view toEdgePoint:destinationPoint];
 }
 
@@ -196,6 +284,7 @@ typedef enum {
 - (void)_presentViewControllerForDraggableView:(CHDraggableView *)draggableView
 {
     if (_actionBlock) {
+        [self.closeView removeFromSuperview];
         _actionBlock(self, draggableView);
     } else {
         UIViewController *viewController = [_delegate draggingCoordinator:self viewControllerForDraggableView:draggableView];
