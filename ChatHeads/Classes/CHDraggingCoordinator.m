@@ -26,9 +26,7 @@ typedef enum {
 @property (nonatomic, strong) UIView *backgroundView;
 
 @property (nonatomic, strong) UIView *closeView;                // view on center bottom - drag the draggable view on top of it to make it go away
-@property (nonatomic, assign) CGRect closeViewEnterScreenFrame; // the position of the close view when entering the screen
-@property (nonatomic, assign) CGRect closeViewOnScreenFrame;    // the position of the close view after being moved (this is it's default pos)
-@property (nonatomic, assign) CGRect closeViewEnlargedFrame;    // the position of the close view enlarged (when the draggable view is close)
+@property (nonatomic, assign) CGSize closeViewSize;
 
 @end
 
@@ -55,26 +53,52 @@ typedef enum {
         _edgePointDictionary = [NSMutableDictionary dictionary];
         
         _closeView = closeView;
-        _closeView.center = CGPointMake(CGRectGetMidX(window.bounds), CGRectGetMaxY(window.bounds));
-        
-        _closeViewEnterScreenFrame = _closeView.frame;
-        
-        // move it up 20 pixels
-        _closeViewOnScreenFrame = _closeViewEnterScreenFrame;
-        _closeViewOnScreenFrame.origin.y -= bounds.size.height + 20;
-        
-        // extend width and height by preserving center position
-        CGFloat delta = 20;
-        _closeViewEnlargedFrame = _closeViewOnScreenFrame;
-        _closeViewEnlargedFrame.origin.x -= round(delta / 2);
-        _closeViewEnlargedFrame.origin.y -= round(delta / 2);
-        _closeViewEnlargedFrame.size.width += delta;
-        _closeViewEnlargedFrame.size.height += delta;
+        _closeViewSize = closeView.frame.size;
+        _closeView.frame = [self _closeViewOnScreenRect];
     }
     return self;
 }
 
 #pragma mark - Geometry
+
+- (CGRect)_closeViewOnEnterScreenRect {
+    CGRect superviewBounds = self.closeView.superview ? self.closeView.superview.bounds : [[self.window subviews][0] bounds];
+    
+    CGPoint center = CGPointMake(CGRectGetMidX(superviewBounds), CGRectGetMaxY(superviewBounds));
+    CGRect enterScreenRect = CGRectMake(center.x - round(self.closeViewSize.width / 2),
+                                        center.y - round(self.closeViewSize.height / 2),
+                                        self.closeViewSize.width,
+                                        self.closeViewSize.height);
+    
+    return enterScreenRect;
+}
+
+- (CGRect)_closeViewOnScreenRect {
+    CGRect superviewBounds = self.closeView.superview.bounds;
+    
+    CGPoint center = CGPointMake(CGRectGetMidX(superviewBounds), CGRectGetMaxY(superviewBounds));
+    CGRect onScreenRect = CGRectMake(center.x - round(self.closeViewSize.width / 2),
+                                     center.y - round(self.closeViewSize.height / 2) - 20 - self.draggableViewBounds.size.height,
+                                     self.closeViewSize.width,
+                                     self.closeViewSize.height);
+    
+    return onScreenRect;
+}
+
+- (CGRect)_closeViewEnlargedRect {
+    CGRect superviewBounds = self.closeView.superview.bounds;
+    
+    CGPoint center = CGPointMake(CGRectGetMidX(superviewBounds), CGRectGetMaxY(superviewBounds));
+    
+    // extend width and height by preserving center position
+    CGFloat delta = 10;
+    CGRect enlargedRect = CGRectMake(center.x - round(self.closeViewSize.width / 2) - delta,
+                                     center.y - round(self.closeViewSize.height / 2) - 20 - self.draggableViewBounds.size.height - delta,
+                                     self.closeViewSize.width + 2 * delta,
+                                     self.closeViewSize.height + 2 * delta);
+    
+    return enlargedRect;
+}
 
 - (CGRect)_dropArea
 {
@@ -141,15 +165,15 @@ typedef enum {
 - (void)draggableViewHold:(CHDraggableView *)view
 {
     // make sure the close view is positioned at the entry screen position
-    self.closeView.frame = self.closeViewEnterScreenFrame;
+    self.closeView.frame = [self _closeViewOnEnterScreenRect];
     
     // then animate it to on screen position and add it
     [UIView transitionWithView:self.window
                       duration:0.4
                        options:UIViewAnimationOptionCurveEaseIn
                     animations:^ {
-                        [self.window insertSubview:self.closeView belowSubview:view];
-                        self.closeView.frame = self.closeViewOnScreenFrame;
+                        [[self.window subviews][0] insertSubview:self.closeView belowSubview:view];
+                        self.closeView.frame = [self _closeViewOnScreenRect];
                     }
                     completion:nil];
 }
@@ -164,10 +188,11 @@ typedef enum {
 {
     CGRect frame = CGRectZero;
     if ([self shouldRemoveDraggableView:view]) {
-        frame = self.closeViewEnlargedFrame;
+        frame = [self _closeViewEnlargedRect];
     } else {
-        frame = self.closeViewOnScreenFrame;
+        frame = [self _closeViewOnScreenRect];
     }
+    
     if (!CGRectEqualToRect(frame, self.closeView.frame)) {
         [UIView animateWithDuration:0.2 animations:^{
             self.closeView.frame = frame;
@@ -200,11 +225,11 @@ typedef enum {
                       duration:0.3
                        options:UIViewAnimationOptionCurveEaseOut
                     animations:^ {
-                        self.closeView.frame = self.closeViewEnterScreenFrame;
+                        self.closeView.frame = [self _closeViewOnEnterScreenRect];
                         if (shouldRemoveDraggableView) {
                             CGRect frame = view.frame;
-                            frame.origin.y = self.closeViewEnterScreenFrame.origin.y;
-                            frame.origin.x = self.closeViewEnterScreenFrame.origin.x;
+                            frame.origin.y = self.closeView.frame.origin.y;
+                            frame.origin.x = self.closeView.frame.origin.x;
                             view.frame = frame;
                         }
                     }
