@@ -86,3 +86,7 @@ That's much better way of doing bounce animations.
 The drawing of the bubble is done in `CHAvatarView` by using an image and adding a black drop shadow and a white inner shadow.
 
 [SKBounceAnimation-link]: https://github.com/khanlou/SKBounceAnimation
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/bpoplauschi/chatheads/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
