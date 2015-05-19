@@ -39,6 +39,8 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [self.layer removeAllAnimations];
+    
     UITouch *touch = [touches anyObject];
     _startTouchPoint = [touch locationInView:self];
     
