@@ -47,6 +47,7 @@ typedef enum {
 {
     self = [super init];
     if (self) {
+        _closeViewEnabled = YES;
         _window = window;
         _draggableViewBounds = bounds;
         _state = CHInteractionStateNormal;
@@ -164,18 +165,20 @@ typedef enum {
 
 - (void)draggableViewHold:(CHDraggableView *)view
 {
-    // make sure the close view is positioned at the entry screen position
-    self.closeView.frame = [self _closeViewOnEnterScreenRect];
-    
-    // then animate it to on screen position and add it
-    [UIView transitionWithView:self.window
-                      duration:0.4
-                       options:UIViewAnimationOptionCurveEaseIn
-                    animations:^ {
-                        [[self.window subviews][0] insertSubview:self.closeView belowSubview:view];
-                        self.closeView.frame = [self _closeViewOnScreenRect];
-                    }
-                    completion:nil];
+    if (self.closeViewEnabled) {
+        // make sure the close view is positioned at the entry screen position
+        self.closeView.frame = [self _closeViewOnEnterScreenRect];
+        
+        // then animate it to on screen position and add it
+        [UIView transitionWithView:self.window
+                          duration:0.4
+                           options:UIViewAnimationOptionCurveEaseIn
+                        animations:^ {
+                            [[self.window subviews][0] insertSubview:self.closeView belowSubview:view];
+                            self.closeView.frame = [self _closeViewOnScreenRect];
+                        }
+                        completion:nil];
+    }
 }
 
 - (BOOL)shouldRemoveDraggableView:(CHDraggableView *)view
