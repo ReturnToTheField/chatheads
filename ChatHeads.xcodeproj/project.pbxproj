@@ -28,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A5D37DE406CB3D795EEFC77 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		1548F1451B914CF6A62B695D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		667E359617214104000B8445 /* ChatHeads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatHeads.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		667E359917214104000B8445 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -55,7 +56,7 @@
 		667E35D317215EDF000B8445 /* CHDraggableView+Avatar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CHDraggableView+Avatar.h"; sourceTree = "<group>"; };
 		667E35D417215EDF000B8445 /* CHDraggableView+Avatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CHDraggableView+Avatar.m"; sourceTree = "<group>"; };
 		66EEA08A1724625700DCBB06 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		A73F26ED7A2046C9B2FB8621 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		6FC11EC0CAA75C2852BB18C8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,13 +75,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01C828E36E03963761205317 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0A5D37DE406CB3D795EEFC77 /* Pods.debug.xcconfig */,
+				6FC11EC0CAA75C2852BB18C8 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		667E358D17214104000B8445 = {
 			isa = PBXGroup;
 			children = (
 				667E359F17214105000B8445 /* ChatHeads */,
 				667E359817214104000B8445 /* Frameworks */,
 				667E359717214104000B8445 /* Products */,
-				A73F26ED7A2046C9B2FB8621 /* Pods.xcconfig */,
+				01C828E36E03963761205317 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -256,7 +266,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -356,7 +366,7 @@
 		};
 		667E35BA17214105000B8445 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A73F26ED7A2046C9B2FB8621 /* Pods.xcconfig */;
+			baseConfigurationReference = 0A5D37DE406CB3D795EEFC77 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatHeads/ChatHeads-Prefix.pch";
@@ -368,7 +378,7 @@
 		};
 		667E35BB17214105000B8445 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A73F26ED7A2046C9B2FB8621 /* Pods.xcconfig */;
+			baseConfigurationReference = 6FC11EC0CAA75C2852BB18C8 /* Pods.release.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatHeads/ChatHeads-Prefix.pch";

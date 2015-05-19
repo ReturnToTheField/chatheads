@@ -3,11 +3,11 @@ PODS:
   - SKBounceAnimation (1.0.03)
 
 DEPENDENCIES:
-  - CAAnimationBlocks
-  - SKBounceAnimation
+  - CAAnimationBlocks (~> 0.0)
+  - SKBounceAnimation (~> 1.0)
 
 SPEC CHECKSUMS:
-  CAAnimationBlocks: b70f877c5b92734abef270152187d3287d84e8f8
-  SKBounceAnimation: 116cdcda440d52f2f6d176032678ffd526ec652a
+  CAAnimationBlocks: 1aaca5fb6447a95d83b20cc786992956ef46e4ee
+  SKBounceAnimation: 6a9e4b08b4a83d90374e96d67ccd5e588d8b14f7
 
-COCOAPODS: 0.27.1
+COCOAPODS: 0.37.1
