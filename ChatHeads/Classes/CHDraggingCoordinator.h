@@ -26,6 +26,7 @@ typedef void(^CHDraggingCoordinatorActionBlock)(CHDraggingCoordinator*, CHDragga
 @property (nonatomic) CHSnappingEdge snappingEdge;
 @property (nonatomic, weak) id<CHDraggingCoordinatorDelegate> delegate;
 @property (nonatomic, copy) CHDraggingCoordinatorActionBlock actionBlock;       // use this action block instead of the delegate draggingCoordinator:viewControllerForDraggableView: method (if actionBlock exists, it gets called instead of the delegate)
+@property (nonatomic) BOOL closeViewEnabled;
 
 - (instancetype)initWithWindow:(UIWindow *)window draggableViewBounds:(CGRect)bounds;
 - (instancetype)initWithWindow:(UIWindow *)window draggableViewBounds:(CGRect)bounds closeView:(UIView *)closeView;
