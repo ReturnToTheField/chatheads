@@ -9,7 +9,7 @@
 #import "CHDraggableView.h"
 #import <QuartzCore/QuartzCore.h>
 
-#import <SKBounceAnimation.h>
+#import "SKBounceAnimation.h"
 
 @interface CHDraggableView ()
 
